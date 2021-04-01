@@ -3,126 +3,41 @@
 #include "led.h"
 #include "stateMachines.h"
 
-char switch_state_down,period, switch_state_changed; /* effectively boolean */
-short noise;
+char  switch_state_changed,switch_1,switch_2,switch_3,switch_4; /* effectively boolean */
 static char 
 switch_update_interrupt_sense()
 {
-  char p1val = P1IN;
+  char p2val = P2IN;
   /* update switch interrupt to detect changes from current buttons */
-  P1IES |= (p1val & SWITCHES);	/* if switch up, sense down */
-  P1IES &= (p1val | ~SWITCHES);	/* if switch down, sense up */
-  return p1val;
+  P2IES |= (p2val & SWITCHES);	/* if switch up, sense down */
+  P2IES &= (p2val | ~SWITCHES);	/* if switch down, sense up */
+  return p2val;
 }
 
 void switch_init()			/* setup switch */
 {  
-  P1REN |= SWITCHES;		/* enables resistors for switches */
-  P1IE |= SWITCHES;		/* enable interrupts from switches */
-  P1OUT |= SWITCHES;		/* pull-ups for switches */
-  P1DIR &= ~SWITCHES;		/* set switches' bits for input */
+  P2REN |= SWITCHES;		/* enables resistors for switches */
+  P2IE |= SWITCHES;		/* enable interrupts from switches */
+  P2OUT |= SWITCHES;		/* pull-ups for switches */
+  P2DIR &= ~SWITCHES;		/* set switches' bits for input */
   switch_update_interrupt_sense();
-  switch_interrupt_handler();
-  led_update();
+  
+  
 }
 
 void
 switch_interrupt_handler()
 {
-  char p1val = switch_update_interrupt_sense();
-  char switch_1 = (p1val & SW1) ? 0 : SW1;
+  char p2val = switch_update_interrupt_sense();
+  switch_1 = (p2val & SW1) ? 0 : 1;
 
-  char switch_2 = (p1val & SW2) ? 0 : SW2;
+  switch_2 = (p2val & SW2) ? 0 : 1;
 
-  char switch_3 = (p1val & SW3) ? 0 : SW3;
+  switch_3 = (p2val & SW3) ? 0 : 1;
 
-  char switch_4 = (p1val & SW4) ? 0 : SW4;
-
-  if(switch_1){
-
-    state_of_led = 0;
-
-    noise = 1000;
-
-    period = 10;
-
-    buzzer_play_sound();
-
-    led_changed = 1;
-
-    led_advance();
-
-    led_update();
-
-    switch_state_down = 1;
-
-  }
-
-
-
-  if(switch_2){
-
-    state_of_led = 0;
-
-    noise = 2000;
-
-    period = 20;
-
-    buzzer_play_sound();
-
-    led_changed = 1;
-
-    led_advance();
-
-    led_update();
-
-    switch_state_down = 1;
-
-  }
-
-
-
-  if(switch_3){
-
-    state_of_led = 0;
-
-    noise = 3000;
-
-    period = 30;
-
-    buzzer_play_sound();
-
-    led_changed = 1;
-
-    led_advance();
-
-    led_update();
-
-    switch_state_down = 1;
-
-  }
-
-
-
-  if(switch_4){
-
-    state_of_led = 0;
-
-    noise = 4000;
-
-    period = 40;
-
-    buzzer_play_sound();
-
-    led_changed = 1;
-
-    led_advance();
-
-    led_update();
-
-    switch_state_down = 1;
-
-  }
-
+  switch_4 = (p2val & SW4) ? 0 : 1;
+   
+  switch_state_changed =1;
+ 
 
 }

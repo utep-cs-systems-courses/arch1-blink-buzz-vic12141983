@@ -25,15 +25,6 @@ void led_update()
     P1OUT |= ledFlags;		     // set bit for on leds
     led_changed = 0;
   }
- void led_move(){
-   state_of_led = 1- state_of_led;
-   led_changed = 1;
-
-  }
- void led_advance(){
-   state_of_led = 1+ state_of_led;
-   led_changed = 1;
-
- }
+ 
 }
 
