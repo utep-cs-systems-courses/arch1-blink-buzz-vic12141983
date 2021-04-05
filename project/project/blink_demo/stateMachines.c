@@ -32,7 +32,7 @@ void state_advance(){
  
 void buzzer_state_advance(){
    if(switch_1){
-     play_sound();
+     play_sound_1();
    }
    if(switch_2){
      play_sound_1();
