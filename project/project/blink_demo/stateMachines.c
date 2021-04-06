@@ -17,9 +17,8 @@ void state_advance(){
   switch(state){
   case 0: red_on = 0; green_on = 0; state++; break;
   case 1: red_on = 1; green_on = 0; state++; break; 
-  case 2: red_on = 1; green_on = 0; state++; break;
-  case 3: red_on = 1; green_on = 0; state++; break;
-  case 4: red_on = 0; green_on = 0; state++; break;  
+  case 2: red_on = 0; green_on = 1; state++; break;
+  case 3: red_on = 1; green_on = 1; state++; break;
    
   default: state  = 0;
 
@@ -29,17 +28,27 @@ void state_advance(){
   led_update();
 }
 
+
  
 void buzzer_state_advance(){
    if(switch_1){
      play_sound_1();
+     
    }
-   if(switch_2){
-     play_sound_1();
-   }else{
+  else if(switch_2){
+     play_sound();
+     
+   }
+  else if(switch_3){
+    play_sound_2();
+  }
+  else if(switch_4){
+    play_sound_3();
+  } 
+  else{
      buzzer_set_period(0);
    }
- }
+}
  void play_sound(){
    static char buzz_state = 0;
    switch(buzz_state){
@@ -65,15 +74,27 @@ void buzzer_state_advance(){
    case 7: buzzer_set_period(1912); buzz_state = 0; break;
    default: buzz_state = 0;
    }
-
  }
+ 
  void play_sound_2(){
    static char buzz_state = 0;
    switch(buzz_state){
    case 0: buzzer_set_period(3322); buzz_state++; break;
    case 1: buzzer_set_period(1322); buzz_state++; break;
    case 2: buzzer_set_period(3322); buzz_state++; break;
+   default: buzz_state = 0;
    }
  }
+ void play_sound_3(){
+   static char buzz_state = 0;
+   switch(buzz_state){
+   case 0: buzzer_set_period(2322); buzz_state++; break;
+   case 1: buzzer_set_period(1322); buzz_state++; break;
+   case 2: buzzer_set_period(1311); buzz_state++; break;
+   default: buzz_state = 0;
+   }
+ }
+
+ 
  
 
