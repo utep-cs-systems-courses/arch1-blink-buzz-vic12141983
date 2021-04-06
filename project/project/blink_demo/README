@@ -1,0 +1,12 @@
+Using the SystemsVM Virtual Machine,
+
+Navigate to arch1-blink-buzz-vic1214983 directory
+Access the project directory
+enter the command make
+connect the MSP430 to the computer
+Go into EMACS
+Open a shell and type command make load
+
+Using the MSP430 begin pressing the buttons
+to play different sounds and watch the lights
+swithc from green to red and vice versa. 
